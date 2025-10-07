@@ -5,73 +5,19 @@ import { Input } from "@/components/ui/input";
 import { User, Lock } from "lucide-react";
 import lpuLogo from "@/assets/lpu-logo.png";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 
 const Login = () => {
   const navigate = useNavigate();
   const [regNo, setRegNo] = useState("");
   const [password, setPassword] = useState("");
-  const [isSignup, setIsSignup] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!regNo || !password) {
+    if (regNo && password) {
+      toast.success("Login successful!");
+      navigate("/app");
+    } else {
       toast.error("Please enter registration number and password");
-      return;
-    }
-
-    const email = `${regNo}@lpu.student`;
-
-    try {
-      if (isSignup) {
-        // Sign up new user
-        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-          email,
-          password,
-        });
-
-        if (signUpError) {
-          if (signUpError.message.includes("already registered")) {
-            toast.error("Account already exists. Please login instead.");
-            setIsSignup(false);
-          } else {
-            throw signUpError;
-          }
-          return;
-        }
-
-        if (signUpData.user) {
-          // Create profile
-          await supabase.from("profiles").upsert({
-            user_id: signUpData.user.id,
-            name: "Student",
-            reg_no: regNo,
-          });
-
-          toast.success("Account created successfully!");
-          navigate("/app");
-        }
-      } else {
-        // Login existing user
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-        if (signInError) {
-          if (signInError.message.includes("Invalid login credentials")) {
-            toast.error("Invalid credentials. Don't have an account? Sign up instead.");
-          } else {
-            throw signInError;
-          }
-          return;
-        }
-
-        toast.success("Login successful!");
-        navigate("/app");
-      }
-    } catch (error: any) {
-      toast.error(error.message || "An error occurred");
     }
   };
 
@@ -87,7 +33,7 @@ const Login = () => {
           className="w-48 h-auto mb-4"
         />
         
-        <form onSubmit={handleSubmit} className="w-full space-y-4">
+        <form onSubmit={handleLogin} className="w-full space-y-4">
           <div className="relative">
             <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-primary" />
             <Input
@@ -115,16 +61,8 @@ const Login = () => {
             variant="auth"
             className="w-40 h-12 rounded-full mx-auto block mt-6"
           >
-            {isSignup ? "SIGN UP" : "LOG IN"}
+            LOG IN
           </Button>
-
-          <button
-            type="button"
-            onClick={() => setIsSignup(!isSignup)}
-            className="w-full text-center text-sm text-primary-foreground/80 hover:text-primary-foreground mt-4"
-          >
-            {isSignup ? "Already have an account? Login" : "Don't have an account? Sign up"}
-          </button>
         </form>
       </div>
     </div>

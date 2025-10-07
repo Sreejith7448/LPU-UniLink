@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import EventCard from "./EventCard";
@@ -18,6 +18,16 @@ const events = [
 
 const Events = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const filteredEvents = events.filter(event =>
     event.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -25,15 +35,15 @@ const Events = () => {
 
   return (
     <div className="pb-20">
-      <div className="px-4 pt-4 pb-2 bg-gradient-to-b from-primary/5 to-transparent">
+      <div className={`sticky top-[60px] z-20 px-4 transition-all duration-300 ${isScrolled ? 'py-2' : 'pt-4 pb-2'}`}>
         <div className="relative max-w-md mx-auto">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+          <Search className={`absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground transition-all duration-300 ${isScrolled ? 'w-4 h-4' : 'w-5 h-5'}`} />
           <Input
             type="text"
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-12 rounded-full bg-card"
+            className={`pl-12 rounded-full bg-card transition-all duration-300 ${isScrolled ? 'h-9 text-sm' : 'h-10'}`}
           />
         </div>
       </div>

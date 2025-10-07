@@ -1,40 +1,28 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Image as ImageIcon, FileText, Link2, Search, ChevronRight, Edit, X } from "lucide-react";
+import { ArrowLeft, Image as ImageIcon, FileText, Link2, Search, ChevronRight, Edit } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { useState, useEffect } from "react";
-import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import { useProfile } from "@/hooks/useProfile";
 import profilePhoto from "@/assets/profile-photo.jpg";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { user, signOut } = useAuth();
+  const [userId, setUserId] = useState<string | null>(null);
   const [isEditingDesc, setIsEditingDesc] = useState(false);
   const [description, setDescription] = useState("");
-  const [isMuted, setIsMuted] = useState(false);
-  const [isEditingLinks, setIsEditingLinks] = useState(false);
-  const [githubUrl, setGithubUrl] = useState("https://github.com/Sreejith7448");
-  const [linkedinUrl, setLinkedinUrl] = useState("https://www.linkedin.com/in/sreejith-mn");
-  const [portfolioUrl, setPortfolioUrl] = useState("https://sreejithmnportfolio.netlify.app");
-  const { profile, updateProfile } = useProfile(user?.id);
+  const { profile, updateProfile } = useProfile(userId || undefined);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUserId(user?.id || null);
+    });
+  }, []);
 
   useEffect(() => {
     if (profile?.description) {
       setDescription(profile.description);
-    }
-    if (profile?.github_url) {
-      setGithubUrl(profile.github_url);
-    }
-    if (profile?.linkedin_url) {
-      setLinkedinUrl(profile.linkedin_url);
-    }
-    if (profile?.portfolio_url) {
-      setPortfolioUrl(profile.portfolio_url);
     }
   }, [profile]);
 
@@ -44,24 +32,12 @@ const Profile = () => {
         name: profile?.name || "Sreejth Mn",
         reg_no: profile?.reg_no || "12205460",
         description,
-        github_url: profile?.github_url || githubUrl,
-        linkedin_url: profile?.linkedin_url || linkedinUrl,
-        portfolio_url: profile?.portfolio_url || portfolioUrl,
+        github_url: "https://github.com/Sreejith7448",
+        linkedin_url: "https://www.linkedin.com/in/sreejith-mn",
+        portfolio_url: "https://sreejithmnportfolio.netlify.app",
       });
       setIsEditingDesc(false);
     }
-  };
-
-  const handleSaveLinks = () => {
-    updateProfile({
-      name: profile?.name || "Sreejth Mn",
-      reg_no: profile?.reg_no || "12205460",
-      description: profile?.description || description,
-      github_url: githubUrl,
-      linkedin_url: linkedinUrl,
-      portfolio_url: portfolioUrl,
-    });
-    setIsEditingLinks(false);
   };
 
   return (
@@ -152,84 +128,15 @@ const Profile = () => {
       </div>
 
       <div className="divide-y">
-        <Dialog>
-          <DialogTrigger asChild>
-            <button className="w-full flex items-center gap-3 p-4 hover:bg-muted/50">
-              <span className="text-xl">🔔</span>
-              <span className="flex-1 text-left">Notification</span>
-              <ChevronRight className="w-5 h-5 text-muted-foreground" />
-            </button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Notification Settings</DialogTitle>
-            </DialogHeader>
-            <div className="flex items-center justify-between py-4">
-              <Label htmlFor="mute-toggle" className="text-base">
-                Mute Notifications
-              </Label>
-              <Switch
-                id="mute-toggle"
-                checked={isMuted}
-                onCheckedChange={setIsMuted}
-              />
-            </div>
-            <p className="text-sm text-muted-foreground">
-              {isMuted ? "Notifications are muted" : "Notifications are active"}
-            </p>
-          </DialogContent>
-        </Dialog>
-
-        {isEditingLinks ? (
-          <div className="p-4 space-y-4">
-            <div className="space-y-2">
-              <Label>GitHub URL</Label>
-              <Input
-                value={githubUrl}
-                onChange={(e) => setGithubUrl(e.target.value)}
-                placeholder="https://github.com/username"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>LinkedIn URL</Label>
-              <Input
-                value={linkedinUrl}
-                onChange={(e) => setLinkedinUrl(e.target.value)}
-                placeholder="https://linkedin.com/in/username"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Portfolio URL</Label>
-              <Input
-                value={portfolioUrl}
-                onChange={(e) => setPortfolioUrl(e.target.value)}
-                placeholder="https://yourportfolio.com"
-              />
-            </div>
-            <div className="flex gap-2">
-              <Button size="sm" onClick={handleSaveLinks}>Save</Button>
-              <Button size="sm" variant="ghost" onClick={() => setIsEditingLinks(false)}>Cancel</Button>
-            </div>
-          </div>
-        ) : (
-          <>
-            <MenuItem icon="🐙" text="GitHub" href={profile?.github_url || githubUrl} />
-            <MenuItem icon="💼" text="LinkedIn" href={profile?.linkedin_url || linkedinUrl} />
-            <MenuItem icon="📁" text="Portfolio" href={profile?.portfolio_url || portfolioUrl} />
-            <button 
-              onClick={() => setIsEditingLinks(true)}
-              className="w-full flex items-center gap-3 p-4 hover:bg-muted/50 text-primary"
-            >
-              <Edit className="w-5 h-5" />
-              <span className="flex-1 text-left">Edit Links</span>
-            </button>
-          </>
-        )}
+        <MenuItem icon="🔔" text="Notification" />
+        <MenuItem icon="🐙" text="GitHub" href="https://github.com/Sreejith7448" />
+        <MenuItem icon="💼" text="LinkedIn" href="https://www.linkedin.com/in/sreejith-mn" />
+        <MenuItem icon="📁" text="Portfolio" href="https://sreejithmnportfolio.netlify.app" />
       </div>
 
       <div className="p-4">
         <button
-          onClick={signOut}
+          onClick={() => navigate('/login')}
           className="w-full py-3 bg-destructive text-destructive-foreground rounded-lg font-semibold hover:bg-destructive/90 transition-colors"
         >
           Logout
