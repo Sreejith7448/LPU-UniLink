@@ -96,24 +96,7 @@ const Profile = () => {
           </div>
         )}
 
-        <div className="flex justify-center gap-8 mt-6">
-          <button className="flex flex-col items-center gap-1">
-            <ImageIcon className="w-6 h-6" />
-            <span className="text-xs">Images</span>
-          </button>
-          <button className="flex flex-col items-center gap-1">
-            <FileText className="w-6 h-6" />
-            <span className="text-xs">Files</span>
-          </button>
-          <button className="flex flex-col items-center gap-1">
-            <Link2 className="w-6 h-6" />
-            <span className="text-xs">Links</span>
-          </button>
-          <button className="flex flex-col items-center gap-1">
-            <Search className="w-6 h-6" />
-            <span className="text-xs">Search</span>
-          </button>
-        </div>
+       
 
         {!isEditingDesc && (
           <Button 
