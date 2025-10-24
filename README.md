@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/c63dbcc3-9009-477a-9280-24b6bd452497
+**URL**: https://unilinklpu.netlify.app/
 
 ## How can I edit this code?
 
