@@ -58,11 +58,9 @@ const Settings = () => {
       />
       </button>
       </div>
-
         <MenuItem icon="🔒" text="Privacy" />
         <MenuItem icon={<Star className="w-5 h-5" />} text="Starred message" />
       </div>
-
       <div className="divide-y mt-8">
         <MenuItem icon="🎓" text="LPU Touch" />
         <MenuItem icon="🎓" text="UMS" />
@@ -70,7 +68,6 @@ const Settings = () => {
     </div>
   );
 };
-
 const MenuItem = ({ 
   icon, 
   text, 

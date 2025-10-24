@@ -95,14 +95,12 @@ const ChatDetail = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-
       <div className="flex-1 overflow-y-auto">
         <div className="flex justify-center my-3">
           <span className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-xs font-semibold">
             Today
           </span>
         </div>
-
         <div className="bg-secondary/50 border border-border p-4 mx-4 my-2 rounded-lg">
           <p className="text-xs font-bold mb-2">POINT TO REMEMBER:</p>
           <p className="text-xs leading-relaxed mb-3">
@@ -189,7 +187,7 @@ const ChatDetail = () => {
             className="rounded-full"
             onClick={() => setShowAttachments(!showAttachments)}
           >
-            <span className="text-xl">+</span>
+          <span className="text-xl">+</span>
           </Button>
           <Input
             value={message}
