@@ -20,6 +20,7 @@ import OrganizationChat from "./pages/OrganizationChat";
 import MemberProfile from "./pages/MemberProfile";
 import NotFound from "./pages/NotFound";
 
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/organization-chat/:id" element={<OrganizationChat />} />
           <Route path="/organization/:id" element={<OrganizationDetail />} />
           <Route path="/member/:id" element={<MemberProfile />} />
+
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
