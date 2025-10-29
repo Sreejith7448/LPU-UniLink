@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
 import { ArrowLeft, ChevronRight, Star, Moon, Sun, Bell, BellOff } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "next-themes";
@@ -16,7 +18,7 @@ const Settings: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground p-4">
-      {/* HEADER */}
+      
       <div
         className="sticky top-0 z-10 px-2 py-3 mb-4"
         style={{ background: "var(--gradient-primary)", borderRadius: "12px" }}
@@ -34,7 +36,7 @@ const Settings: React.FC = () => {
         />
       </div>
 
-      {/* PROFILE SECTION */}
+     
       <MenuItem
         icon={<img
           src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop"
@@ -45,9 +47,9 @@ const Settings: React.FC = () => {
         to="/profile"
       />
 
-      {/* SETTINGS MENU */}
+   
       <div className="divide-y mt-4 space-y-2">
-        {/* Notification Settings Inline */}
+        
         <div className="flex flex-col gap-2 p-4 hover:bg-muted/50 transition-colors duration-300 rounded-xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -61,7 +63,7 @@ const Settings: React.FC = () => {
               </span>
             </div>
 
-            {/* Mute Toggle */}
+           
             <button
               onClick={() => setMuted(!muted)}
               className={`relative inline-flex h-8 w-16 items-center rounded-full transition-all duration-500 ${
@@ -99,7 +101,7 @@ const Settings: React.FC = () => {
           )}
         </div>
 
-        {/* Theme Switcher */}
+        
         <div className="flex items-center justify-between p-4 hover:bg-muted/50 rounded-xl transition-colors duration-300">
           <span className="text-left">🌞 Theme</span>
           <button
@@ -123,16 +125,29 @@ const Settings: React.FC = () => {
           </button>
         </div>
 
-        {/* Other menu items */}
+       
         <MenuItem icon="🔒" text="Privacy" />
         <MenuItem icon={<Star className="w-5 h-5" />} text="Starred Messages" />
       </div>
 
-      {/* Additional menu section */}
+      
       <div className="divide-y mt-8 space-y-2">
         <MenuItem icon="🎓" text="LPU Touch" />
         <MenuItem icon="🎓" text="UMS" />
       </div>
+      
+<div className="sticky bottom-4 flex justify-center">
+  <Button
+    variant="destructive"
+    size="sm"
+    onClick={() => navigate("/login")}
+    className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-500 hover:bg-red-600 text-white text-sm shadow-md"
+  >
+    <LogOut className="w-4 h-4" />
+    Logout
+  </Button>
+</div>
+
     </div>
   );
 };
@@ -161,6 +176,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ icon, text, badge, to }) => {
       {badge && <span className="text-sm text-muted-foreground">{badge}</span>}
       <ChevronRight className="w-5 h-5 text-muted-foreground" />
     </button>
+    
   );
 };
 
