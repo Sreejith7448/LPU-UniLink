@@ -1,69 +1,108 @@
-import { useNavigate, useParams } from "react-router-dom";
+// import { useNavigate, useParams } from "react-router-dom";
+// import { ArrowLeft, Home } from "lucide-react";
+
+// const EventDetail: React.FC = () => {
+//   const { id } = useParams();
+//   const navigate = useNavigate();
+
+//   // fallback sample data — you can replace with your real fetch later
+//   const sample: Record<string, any> = {
+//     "1": {
+//       title: "23DC",
+//       image:
+//         "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80",
+//       text:
+//         "From walking the beautiful pathways of LPU to shaping skylines worldwide, 23DC Architects...",
+//     },
+//     // keep other ids if needed...
+//   };
+
+//   const event = sample[id as string] ?? {
+//     title: `Event ${id}`,
+//     image:
+//       "https://images.unsplash.com/photo-1504198453319-5ce911bafcde?w=1200&q=80",
+//     text: "Event details not found in sample data.",
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-background">
+//       <div
+//         className="sticky top-0 z-10 px-4 py-3 flex items-center gap-3"
+//         style={{ background: "var(--gradient-primary)" }}
+//       >
+//         <button onClick={() => navigate(-1)} className="text-primary-foreground">
+//           <ArrowLeft className="w-6 h-6" />
+//         </button>
+//         <h1 className="text-lg font-semibold text-primary-foreground flex-1 text-center">Event Details</h1>
+//         <button onClick={() => navigate("/app")} className="text-primary-foreground">
+//           <Home className="w-6 h-6" />
+//         </button>
+//       </div>
+
+//       <div className="p-4">
+//         <div className="border border-gray-200 rounded-none overflow-hidden shadow-sm">
+//           <img src={event.image} alt={event.title} className="w-full h-64 object-cover" />
+//           <div className="p-4">
+//             <h2 className="text-xl font-bold mb-2">{event.title}</h2>
+//             <p className="text-sm text-muted-foreground leading-relaxed">{event.text}</p>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default EventDetail;
+
+
+
+// pages/EventDetail.tsx
+import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeft, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const EventDetail = () => {
-  const { id } = useParams();
+  const { state } = useLocation();
   const navigate = useNavigate();
 
+  if (!state) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <p>No event details found.</p>
+        <Button onClick={() => navigate("/events")} className="mt-4">
+          Go Back
+        </Button>
+      </div>
+    );
+  }
+
+  const { title, description, date, image } = state;
+
   return (
-    <div className="min-h-screen bg-background">
-      <div 
-        className="sticky top-0 z-10 px-4 py-3 flex items-center gap-3"
-        style={{ background: "var(--gradient-primary)" }}
-      >
-        <button onClick={() => navigate(-1)} className="text-primary-foreground">
-          <ArrowLeft className="w-6 h-6" />
+    <div className="min-h-screen bg-[#fffaf5]">
+      <div className="sticky top-0 z-10 flex items-center justify-between bg-orange-400 px-4 py-3 text-white font-semibold text-lg">
+        <button onClick={() => navigate(-1)}>
+          <ArrowLeft size={22} />
         </button>
-        <h1 className="text-lg font-semibold text-primary-foreground flex-1">Event Details</h1>
-        <button onClick={() => navigate("/app")} className="text-primary-foreground">
-          <Home className="w-6 h-6" />
+        <span>Event Details</span>
+        <button onClick={() => navigate("/events")}>
+          <Home size={22} />
         </button>
       </div>
 
-      <div className="p-4">
-        <div className="bg-card rounded-xl overflow-hidden shadow-lg mb-4">
-          <div className="bg-primary text-primary-foreground px-4 py-2">
-            <h2 className="font-bold">23DC</h2>
-          </div>
+      <div className="p-6">
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&h=500&fit=crop"
-            alt="23DC Event"
+            src={image}
+            alt={title}
             className="w-full h-64 object-cover"
           />
+          <div className="p-5">
+            <h2 className="text-2xl font-bold mb-2">{title}</h2>
+            <p className="text-sm text-gray-500 mb-4">{date}</p>
+            <p className="text-gray-700 leading-relaxed">{description}</p>
+          </div>
         </div>
-
-        <div className="bg-card rounded-xl p-4 shadow-md space-y-4">
-          <p className="text-sm leading-relaxed">
-            From walking the beautiful pathways of LPU to shaping skylines worldwide, Mr. Sahil Dujja and Mr. Mohit Chawla have built a global legacy with 23DC Architects, a leading name in modern architecture, which is now revolutionizing luxury, sustainable, and futuristic design on an international scale.
-          </p>
-
-          <p className="text-sm leading-relaxed">
-            Our #ProudVertos credit LPU's unparalleled infrastructure and world-class faculty for nurturing their architectural acumen. Immersive exposure to global trends and hands-on learning at LPU laid the foundation for their ambitious journey.
-          </p>
-
-          <p className="text-sm leading-relaxed">
-            Today, 23DC Architects is a force in the architectural world, as it has been recognized in prestigious design publications and acclaimed for its innovative projects, standing as a symbol of excellence in modern architecture.
-          </p>
-
-          <p className="text-sm leading-relaxed">
-            We are truly proud of their journey, which proves that with the right education, passion, and determination, #LPUAlumni don't just build careers, they build legacies.
-          </p>
-
-          <p className="text-sm text-primary">
-            To know more about #ArchitectureAtLPU, visit{" "}
-            <a href="http://www.lpu.in" className="underline font-semibold">
-              www.lpu.in
-            </a>
-          </p>
-        </div>
-
-        <Button 
-          className="w-full mt-6 rounded-full"
-          onClick={() => navigate("/app")}
-        >
-          Back to Events
-        </Button>
       </div>
     </div>
   );

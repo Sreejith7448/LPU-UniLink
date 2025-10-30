@@ -108,17 +108,41 @@ All colors MUST be HSL.
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+
+
+
+
+
+.events-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* small space between boxes */
+  padding: 10px 20px;
+  background-color: #fff5eb;
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.4s ease-out forwards;
+.event-card {
+  border: 2px solid #f37021;
+  border-radius: 0px; /* no curve */
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.event-title {
+  background-color: #f37021;
+  color: white;
+  font-weight: bold;
+  padding: 8px 12px;
+}
+
+.event-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.event-description {
+  padding: 10px 12px;
+  font-size: 14px;
+  color: #333;
 }
