@@ -5,19 +5,49 @@ import { Input } from "@/components/ui/input";
 import { User, Lock } from "lucide-react";
 import lpuLogo from "@/assets/lpu-logo.png";
 import { toast } from "sonner";
+import api from "@/api/axios";
 
 const Login = () => {
   const navigate = useNavigate();
   const [regNo, setRegNo] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (regNo && password) {
-      toast.success("Login successful!");
-      navigate("/app");
-    } else {
+
+    if (!regNo || !password) {
       toast.error("Please enter registration number and password");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      console.log("🔹 Attempting login with:", { regNo, password }); // Debug log
+
+      const { data } = await api.post("/auth/login", { regNo, password });
+
+      console.log("✅ Login response:", data); // Debug log
+
+      // Save JWT token in localStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      toast.success(`Welcome, ${data.user.name}!`);
+
+
+        navigate("/app");
+
+    } catch (err: any) {
+      console.error("❌ Login error:", err);
+      console.error("❌ Error response:", err.response?.data);
+      
+      // Check for both 'error' and 'message' fields from backend
+      const errorMessage = err.response?.data?.error || err.response?.data?.message || "Invalid credentials";
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,8 +90,9 @@ const Login = () => {
             type="submit"
             variant="auth"
             className="w-40 h-12 rounded-full mx-auto block mt-6"
+            disabled={loading}
           >
-            LOG IN
+            {loading ? "Logging in..." : "LOG IN"}
           </Button>
         </form>
       </div>
