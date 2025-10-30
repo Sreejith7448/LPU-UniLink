@@ -1,73 +1,70 @@
-# Welcome to your Lovable project
 
-## Project info
 
 **URL**: https://unilinklpu.netlify.app/
 
-## How can I edit this code?
+🔐 Secure Collaboration & Controlled Communication System
 
-There are several ways of editing your application.
+LPU Sphere prioritizes student privacy and academic professionalism.
+Instead of unrestricted personal messaging, the platform uses a structured connection system designed specifically for academic collaboration and hackathon/team formation.
 
-**Use Lovable**
+🎓 HOD-Verified Talent Groups
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c63dbcc3-9009-477a-9280-24b6bd452497) and start prompting.
+Top-ranked students are shortlisted and verified by HODs
 
-Changes made via Lovable will be committed automatically to this repo.
+Their academic profiles are visible to other students
 
-**Use your preferred IDE**
+Profiles include:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+✅ LinkedIn
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+✅ GitHub
 
-Follow these steps:
+✅ Portfolio / Personal website
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Helps students discover skilled peers for projects & competitions
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+🤝 Smart Collaboration Request Flow
 
-# Step 3: Install the necessary dependencies.
-npm i
+Each top-student profile contains predefined collaboration actions like:
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Connect
 
-**Edit a file directly in GitHub**
+Request Academic Help
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Hackathon Team Invite
 
-**Use GitHub Codespaces**
+Project Collaboration
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+When a student clicks these:
 
-## What technologies are used for this project?
+A connection request is sent
 
-This project is built with:
+Receiver sees Accept / Deny
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Upon acceptance, LPU official emails are exchanged automatically
 
-## How can I deploy this project?
+No personal messaging without consent
 
-Simply open [Lovable](https://lovable.dev/projects/c63dbcc3-9009-477a-9280-24b6bd452497) and click on Share -> Publish.
+🚫 Privacy-First Messaging Rules
+Feature	Status
+Open personal chat	             ❌ Disabled
+Student-to-student private DM	   ❌ Restricted
+Group chat for students	         ❌ Disabled
+Verified academic collaboration	 ✅ Enabled
+Email-based formal connections	 ✅ Automatic
 
-## Can I connect a custom domain to my Lovable project?
+This ensures communication stays academic, safe, and professionally aligned.
 
-Yes, you can!
+🎯 Why This Matters
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Protects students from misuse of chat features
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Ensures safe networking inside the university
+
+Encourages academic discussions & project building
+
+Builds a professional culture like LinkedIn but campus-focused
+
+✅ Summary
+
+LPU Sphere enables secure academic networking through a request-based collaboration system where only verified students can be contacted, and communication happens through official university emails — ensuring privacy and enhancing professional student interaction.
